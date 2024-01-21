@@ -1,10 +1,14 @@
 version: "3.9"
 services:
-  python3:
+  python3-flask:
     restart: always
     build: .
-    container_name: "python3"
-    working_dir: "/"
+    container_name: "python3-flask"
+    working_dir: "/app"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
     tty: true
     ports:
       - "8000:5000"

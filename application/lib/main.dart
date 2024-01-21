@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final audioPlayer = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Welcome to Flutter',
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Welcome to Flutter'),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Audio Player'),
         ),
-        body: new Center(
-          child: new Text('Hello World'),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () => audioPlayer
+                .play('http://localhost:8000/static/audios/test-song-1.mp3'),
+            // onPressed: () => audioPlayer
+            //     .play('http://10.0.2.2:8000/static/audios/test-song-1.mp3'),
+            child: Text('Play Audio ！'),
+          ),
         ),
       ),
     );
   }
 }
-
