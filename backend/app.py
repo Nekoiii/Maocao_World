@@ -1,6 +1,11 @@
 from flask import Flask, render_template,send_from_directory
+from flask_cors import CORS
+
+from routes.maocao_logo_route import maocao_logo_bp
 
 app = Flask(__name__)
+CORS(app)
+app.register_blueprint(maocao_logo_bp)
 
 @app.route('/')
 def index():
@@ -9,11 +14,6 @@ def index():
 @app.route('/test-audio')
 def test_audio():
     return app.send_static_file('audios/test-song-1.mp3')
-
-@app.route('/test-img')
-def test_img():
-    return send_from_directory('static','images/test-img-1.jpg')
-
 
 if __name__ == '__main__':
     app.run()

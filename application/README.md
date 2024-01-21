@@ -1,12 +1,21 @@
-# application
+【构建flutter项目】
+官方文档：https://flutter-ko.dev/get-started/install/macos
+（中文版）：https://doc.flutterchina.club/setup-macos/
 
-A new Flutter project.
+【mac中配置环境变量】
+假设已经将 Flutter SDK 解压到某个目录（例如 ~/development/flutter），这个路径就是 Flutter SDK 的路径。
 
-## Getting Started
+open -e ~/.bash_profile
 
-This project is a starting point for a Flutter application.
+.bash_profile 文件里加一句：export PATH="$PATH:/path/to/flutter/bin"
+将 /path/to/flutter/bin 替换为 Flutter SDK 路径。例如：
+例如 export PATH="$PATH:~/development/flutter/bin"
 
-A few resources to get you started if this is your first Flutter project:
+保存并关闭编辑器。然后，重新加载配置文件，使更改生效：
+source ~/.bash_profile
+
+确认 Flutter 是否已正确配置：
+flutter doctor
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
