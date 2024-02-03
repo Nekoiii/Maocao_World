@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+  <key>NSPhotoLibraryUsageDescription</key>
+<string>我们需要访问你的照片库来选择视频文件</string>
 </dict>
 </plist>
