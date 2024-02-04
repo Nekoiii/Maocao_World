@@ -1,11 +1,17 @@
 import os
 import cv2
+import pdb
 
 
 def read_video_frames(video_path):
     cap = cv2.VideoCapture(video_path)
-    frames = []
 
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    size = (width, height)
+
+    frames = []
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
@@ -13,17 +19,15 @@ def read_video_frames(video_path):
         frames.append(frame)
 
     cap.release()
-    return frames
+    return frames, fps, size
 
 
-def get_latest_video_file(upload_folder):
-    video_files = [
-        os.path.join(upload_folder, f)
-        for f in os.listdir(upload_folder)
-        if os.path.isfile(os.path.join(upload_folder, f))
-    ]
-    if not video_files:
-        return None
+def frames_to_video(frames, output_path, fps, size):
+    # pdb.set_trace()
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    video_writer = cv2.VideoWriter(output_path, fourcc, fps, size)
 
-    latest_file = max(video_files, key=os.path.getmtime)
-    return latest_file
+    for frame in frames:
+        video_writer.write(frame)
+
+    video_writer.release()
