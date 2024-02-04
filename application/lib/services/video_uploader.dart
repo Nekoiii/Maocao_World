@@ -15,21 +15,19 @@ class VideoUploader {
     var totalByteSent = 0;
 
     // 监听文件流，每次发送数据时都更新 totalByteSent 和上传进度
-    controller.stream
-        .transform<List<int>>(StreamTransformer.fromHandlers(
-          handleData: (data, sink) {
-            sink.add(data);
-            totalByteSent += data.length;
-            onUploadProgress(totalByteSent / length);
-          },
-          handleError: (error, stackTrace, sink) {
-            sink.addError(error);
-          },
-          handleDone: (sink) {
-            sink.close();
-          },
-        ))
-        .pipe(file.openWrite());
+    controller.stream.transform<List<int>>(StreamTransformer.fromHandlers(
+      handleData: (data, sink) {
+        sink.add(data);
+        totalByteSent += data.length;
+        onUploadProgress(totalByteSent / length);
+      },
+      handleError: (error, stackTrace, sink) {
+        sink.addError(error);
+      },
+      handleDone: (sink) {
+        sink.close();
+      },
+    ));
 
     request.files.add(http.MultipartFile(
       'video',
@@ -41,7 +39,7 @@ class VideoUploader {
     var response = await request.send();
 
     if (response.statusCode == 200) {
-      print('Video uploaded successfully');
+      print('Video upload successfully');
     } else {
       print('Video upload failed');
     }
