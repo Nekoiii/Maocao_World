@@ -19,7 +19,8 @@ class HomePage extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2),
               ImageDisplayWidget(
                   imageUrl:
-                      'http://localhost:8000/static/images/maocao-logo-1.png'),
+                      // 'http://localhost:8000/static/images/maocao-logo-1.png'),
+                      'http://localhost:5000/static/images/maocao-logo-1.png'),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {

@@ -5,7 +5,8 @@ import 'dart:io';
 class VideoUploader {
   Future<void> uploadVideo(
       String filePath, Function(double) onUploadProgress) async {
-    var uri = Uri.parse('http://localhost:8000/upload');
+    // var uri = Uri.parse('http://localhost:8000/upload');
+    var uri = Uri.parse('http://localhost:5000/upload');
     var request = http.MultipartRequest('POST', uri);
 
     var file = File(filePath);
