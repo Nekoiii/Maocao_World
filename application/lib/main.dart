@@ -6,7 +6,11 @@ import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
 import 'package:application/services/video_uploader.dart';
 
-void main() => runApp(MyApp());
+// void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized(); // 确保Flutter绑定初始化
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   final audioPlayer = AudioPlayer();

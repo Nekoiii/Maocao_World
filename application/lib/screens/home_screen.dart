@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import '../config/app_config.dart';
+
 import '../widgets/image_display_widget.dart';
 import '../screens/upload_video_screen.dart';
+import '../screens/play_video_screen.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -19,8 +22,7 @@ class HomePage extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2),
               ImageDisplayWidget(
                   imageUrl:
-                      // 'http://localhost:8000/static/images/maocao-logo-1.png'),
-                      'http://localhost:5000/static/images/maocao-logo-1.png'),
+                      '${AppConfig.flaskServerUrl}/static/images/maocao-logo-1.png'),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
@@ -32,6 +34,16 @@ class HomePage extends StatelessWidget {
                 },
                 child: Text('Go to Upload Video'),
               ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PlayVideoScreen()),
+                  );
+                },
+                child: Text('Play Video'),
+              )
             ],
           ),
         ));

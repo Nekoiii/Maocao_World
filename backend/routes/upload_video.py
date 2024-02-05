@@ -4,14 +4,13 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 from services.ml_services.detect_wires_with_yolo import detect_wires_with_yolo
 
-upload_bp = Blueprint("upload", __name__)
+upload_video_bp = Blueprint("upload_video", __name__)
 
 UPLOAD_FOLDER = "uploads"
 
 
-@upload_bp.route("/upload", methods=["POST"])
+@upload_video_bp.route("/upload_video", methods=["POST"])
 def upload_video():
-    print("a--0")
     try:
         print("a--1-request.files", request.files)
         print("a--2-request.form", request.form)

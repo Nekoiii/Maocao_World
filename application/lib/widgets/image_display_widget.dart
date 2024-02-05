@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../config/app_config.dart';
 
 class ImageDisplayWidget extends StatelessWidget {
   final String imageUrl;
@@ -13,6 +14,7 @@ class ImageDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Flask Server URL: ${AppConfig.flaskServerUrl}");
     return Container(
       width: width,
       height: height,
