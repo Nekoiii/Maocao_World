@@ -12,7 +12,6 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
 
   @override
   void initState() {
-    print('aa');
     super.initState();
     _controller = VideoPlayerController.networkUrl(GetVideo.getVideoUri())
       ..initialize().then((_) {

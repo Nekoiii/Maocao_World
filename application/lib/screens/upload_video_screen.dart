@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../services/video_uploader.dart';
+import './play_video_screen.dart';
 
 class UploadVideoScreen extends StatefulWidget {
   @override
@@ -19,17 +20,31 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
     if (pickedFile != null) {
       String filePath = pickedFile.path;
 
-      await uploader.uploadVideo(filePath, (progress) {
-        setState(() {
-          _uploadProgress = progress;
+      print('aaa-1');
+      try {
+        await uploader.uploadVideo(filePath, (progress) {
+          setState(() {
+            _uploadProgress = progress;
+          });
         });
-      });
-
+      } catch (e) {
+        print("Error uploading video: $e");
+      }
+      print('aaa-2');
       setState(() {
         _uploadProgress = 0.0;
       });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Video uploaded successfully')));
+      print('aaa-3');
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Video uploaded successfully')));
+        print('SnackBar should be shown');
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PlayVideoScreen()),
+        );
+      }
     } else {
       print('No video selected.');
     }
@@ -39,7 +54,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Upload Video'),
+        title: const Text('Upload Video'),
       ),
       body: Center(
         child: Column(
@@ -49,7 +64,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
               LinearProgressIndicator(value: _uploadProgress),
             ElevatedButton(
               onPressed: () => _onUploadButtonPressed(context),
-              child: Text('Upload Video'),
+              child: const Text('Upload Video'),
             ),
           ],
         ),

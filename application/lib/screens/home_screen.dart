@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Maocao World'),
+          title: const Text('Maocao World'),
         ),
         body: Center(
           child: Column(
@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
               ImageDisplayWidget(
                   imageUrl:
                       '${AppConfig.flaskServerUrl}/static/images/maocao-logo-1.png'),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -32,9 +32,9 @@ class HomePage extends StatelessWidget {
                         builder: (context) => UploadVideoScreen()),
                   );
                 },
-                child: Text('Go to Upload Video'),
+                child: const Text('Go to Upload Video'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => PlayVideoScreen()),
                   );
                 },
-                child: Text('Play Video'),
+                child: const Text('Play Video'),
               )
             ],
           ),
