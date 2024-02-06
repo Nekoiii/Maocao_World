@@ -16,37 +16,31 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
 
   void _onUploadButtonPressed(BuildContext context) async {
     final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+    if (pickedFile == null) return;
 
-    if (pickedFile != null) {
-      String filePath = pickedFile.path;
+    String filePath = pickedFile.path;
 
-      print('aaa-1');
-      try {
-        await uploader.uploadVideo(filePath, (progress) {
-          setState(() {
-            _uploadProgress = progress;
-          });
+    try {
+      await uploader.uploadVideo(filePath, (progress) {
+        setState(() {
+          _uploadProgress = progress;
         });
-      } catch (e) {
-        print("Error uploading video: $e");
-      }
-      print('aaa-2');
-      setState(() {
-        _uploadProgress = 0.0;
       });
-      print('aaa-3');
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Video uploaded successfully')));
-        print('SnackBar should be shown');
+    } catch (e) {
+      print("Error uploading video: $e");
+    }
+    setState(() {
+      _uploadProgress = 0.0;
+    });
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Video uploaded successfully')));
+      print('SnackBar shown');
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PlayVideoScreen()),
-        );
-      }
-    } else {
-      print('No video selected.');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PlayVideoScreen()),
+      );
     }
   }
 

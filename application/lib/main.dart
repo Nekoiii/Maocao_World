@@ -4,7 +4,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'theme/app_theme.dart';
 
 import 'screens/home_screen.dart';
-import 'package:application/services/video_uploader.dart';
 
 // void main() => runApp(MyApp());
 void main() {

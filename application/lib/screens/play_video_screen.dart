@@ -26,7 +26,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Play Video'),
+        title: const Text('Play Video'),
       ),
       body: Center(
         child: _controller.value.isInitialized
@@ -55,7 +55,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 }
