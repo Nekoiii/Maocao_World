@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import '../config/app_config.dart';
+import 'package:flutter/material.dart';
 
 import '../widgets/image_display_widget.dart';
 import '../screens/upload_video_screen.dart';
 import '../screens/play_video_screen.dart';
+import '../screens/camera_screen.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -43,6 +44,16 @@ class HomePage extends StatelessWidget {
                   );
                 },
                 child: const Text('Play Video'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CameraScreen()),
+                  );
+                },
+                child: const Text('Open Camera'),
               )
             ],
           ),

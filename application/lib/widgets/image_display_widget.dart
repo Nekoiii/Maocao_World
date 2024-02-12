@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import '../config/app_config.dart';
+import 'package:flutter/material.dart';
 
 class ImageDisplayWidget extends StatelessWidget {
   final String imageUrl;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import '../services/get_video.dart'; // 引入你的视频服务
+import '../services/get_video.dart';
 
 class PlayVideoScreen extends StatefulWidget {
   @override

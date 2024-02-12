@@ -12,21 +12,15 @@ UPLOAD_FOLDER = "uploads"
 @upload_video_bp.route("/upload_video", methods=["POST"])
 def upload_video():
     try:
-        # print("a--1-request.files", request.files)
-        # print("a--2-request.form", request.form)
-        # print("a--3-request", request)
-
         video = request.files["video"]
         filename = secure_filename(video.filename)
         save_path = os.path.join(UPLOAD_FOLDER, filename)
         video.save(save_path)
 
         detections = detect_wires_with_yolo(save_path)
-        # os.remove(save_path)  # 删除临时文件
+        os.remove(save_path)  # 删除临时文件
 
-        # print("ddddd", jsonify(detections), "end-ddddd")
-        response_data = {"detections": "xxx"}
-        return jsonify(response_data), 200
+        return jsonify(detections), 200
     except Exception as e:
         print(f"Error occurred: {e}")
         return jsonify({"error": str(e)}), 500

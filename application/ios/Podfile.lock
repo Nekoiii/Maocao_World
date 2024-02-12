@@ -1,6 +1,8 @@
 PODS:
   - audioplayers (0.0.1):
     - Flutter
+  - camera_avfoundation (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
@@ -13,6 +15,7 @@ PODS:
 
 DEPENDENCIES:
   - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
+  - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -21,6 +24,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   audioplayers:
     :path: ".symlinks/plugins/audioplayers/ios"
+  camera_avfoundation:
+    :path: ".symlinks/plugins/camera_avfoundation/ios"
   Flutter:
     :path: Flutter
   image_picker_ios:
@@ -32,6 +37,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
+  camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c

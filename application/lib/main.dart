@@ -5,9 +5,8 @@ import 'theme/app_theme.dart';
 
 import 'screens/home_screen.dart';
 
-// void main() => runApp(MyApp());
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // 确保Flutter绑定初始化
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
