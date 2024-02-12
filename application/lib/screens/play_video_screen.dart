@@ -9,6 +9,7 @@ class PlayVideoScreen extends StatefulWidget {
 
 class _PlayVideoScreenState extends State<PlayVideoScreen> {
   late VideoPlayerController _controller;
+  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -16,10 +17,24 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
     _controller = VideoPlayerController.networkUrl(GetVideo.getVideoUri())
       ..initialize().then((_) {
         setState(() {});
+        _controller.addListener(_updatePlayPauseIcon);
       }).catchError((error) {
         print("Video player initialization error: $error");
       });
     ;
+  }
+
+  void _updatePlayPauseIcon() {
+    if (!_controller.value.isPlaying &&
+        _controller.value.position == _controller.value.duration) {
+      setState(() {
+        _isPlaying = false;
+      });
+    } else {
+      setState(() {
+        _isPlaying = _controller.value.isPlaying;
+      });
+    }
   }
 
   @override
@@ -47,7 +62,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
           });
         },
         child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+          _isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
     );
