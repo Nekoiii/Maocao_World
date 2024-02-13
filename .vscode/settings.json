@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["jsonify", "Maocao", "nparr", "ultralytics", "werkzeug"]
+  "cSpell.words": [
+    "jsonify",
+    "Maocao",
+    "nparr",
+    "tflite",
+    "ultralytics",
+    "werkzeug"
+  ]
 }

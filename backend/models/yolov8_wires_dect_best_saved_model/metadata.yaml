@@ -1,0 +1,14 @@
+description: Ultralytics YOLOv8_wires_dect_best model trained on /content/drive/MyDrive/Wire_Note_Project/try_yolov8.yaml
+author: Ultralytics
+license: AGPL-3.0 https://ultralytics.com/license
+date: '2024-02-13T18:06:29.408621'
+version: 8.0.178
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: cable
+  1: tower_wooden
