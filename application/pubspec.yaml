@@ -71,7 +71,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/models/yolov8_wires_dect_best_int8.tflite
+    - assets/models/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

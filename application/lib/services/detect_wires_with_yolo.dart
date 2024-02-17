@@ -9,7 +9,9 @@ import 'package:image/image.dart' as img;
 import './YUV420_to_RGB.dart';
 import './BGRA8888_to_RGB.dart';
 
-const MODEL_PATH = 'assets/models/yolov8_wires_dect_best_int8.tflite';
+// const MODEL_PATH = 'assets/models/yolov8_wires_dect_best_int8.tflite';
+// const MODEL_PATH = 'assets/models/yolov8_wires_dect_best_full_integer_quant.tflite';
+const MODEL_PATH = 'assets/models/yolov8_wires_dect_best_float16.tflite';
 
 class DetectionResult {
   final Rect boundingBox;
