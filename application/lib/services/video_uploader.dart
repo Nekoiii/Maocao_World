@@ -1,7 +1,7 @@
 import '../config/app_config.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:io';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class VideoUploader {
   Future<void> uploadVideo(

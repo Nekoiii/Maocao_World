@@ -20,10 +20,17 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text('Welcome to Maocao World !',
-                  style: Theme.of(context).textTheme.bodyText2),
-              ImageDisplayWidget(
-                  imageUrl:
-                      '${AppConfig.flaskServerUrl}/static/images/maocao-logo-1.png'),
+                  style: Theme.of(context).textTheme.bodyMedium),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                child: Image.asset(
+                  'assets/images/maocao-logo-1.png',
+                  fit: BoxFit.scaleDown,
+                ),
+                // child:ImageDisplayWidget(
+                //     imageUrl:
+                //         '${AppConfig.flaskServerUrl}/static/images/maocao-logo-1.png'),
+              ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {

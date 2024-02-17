@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
 
-import '../services/send_frame.dart';
+import '../services/detect_wires_with_yolo.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -11,101 +11,65 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+  final DetectWiresWithYolo _wiresDetector = DetectWiresWithYolo();
   CameraController? _cameraController;
-  List<CameraDescription>? _cameras;
-  bool _isSendingFrames = false;
-  Timer? _timer;
-
-  int _selectedCameraIndex = 0;
-  bool _cameraExist = true;
+  List<CameraDescription> _cameras = [];
+  bool showBoundingBoxes = false;
+  bool _isProcessingImage = false;
 
   @override
   void initState() {
     super.initState();
-    _initCameras();
+    _initCamera();
   }
 
-  Future<void> _initCameras() async {
+  Future<void> _initCamera() async {
     _cameras = await availableCameras();
-    print('_initCameras---_cameras$_cameras');
-    if (_cameras != null && _cameras!.isNotEmpty) {
-      _cameraController = CameraController(
-        _cameras![_selectedCameraIndex],
-        ResolutionPreset.medium,
-      );
-      _cameraController!.initialize().then((_) {
-        if (!mounted) {
-          return;
-        }
-        setState(() {});
-      });
-    } else {
-      setState(() {
-        _cameraExist = false;
-      });
+    if (_cameras.isEmpty) {
+      print('No camera is found!');
+      return;
     }
+    _cameraController = CameraController(
+      _cameras![0], // Select the first camera
+      ResolutionPreset.medium,
+    );
+    await _cameraController!.initialize();
+    setState(() {});
   }
 
-  void _startSendingFrames() {
-    print('_startSendingFrames---');
-    if (_cameraController != null && _cameraController!.value.isInitialized) {
-      const fps = Duration(milliseconds: 1000 ~/ 24); // 24 frames per second
-      _timer = Timer.periodic(fps, (timer) async {
-        final image = await _takePicture();
-        if (image != null) {
-          sendFrame(image);
-        }
-      });
-      setState(() => _isSendingFrames = true);
-    }
-  }
+  void _startDetection() {
+    if (_cameraController!.value.isStreamingImages) return;
 
-  Future<XFile?> _takePicture() async {
-    if (!_cameraController!.value.isInitialized) {
-      print('Error: select a camera first.');
-      return null;
-    }
+    _cameraController?.startImageStream((CameraImage image) async {
+      if (_isProcessingImage) return;
+      _isProcessingImage = true;
 
-    try {
-      final file = await _cameraController!.takePicture();
-      return file;
-    } catch (e) {
-      print('takePicture error: $e');
-      return null;
-    }
-  }
-
-  void _stopSendingFrames() {
-    _timer?.cancel();
-    setState(() => _isSendingFrames = false);
-  }
-
-  @override
-  void dispose() {
-    _cameraController?.dispose();
-    super.dispose();
+      List<DetectionResult> detections =
+          await _wiresDetector.detectWires(image);
+      _isProcessingImage = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
-      return Scaffold(
-        appBar: AppBar(title: Text('Camera View')),
-        body: Center(
-          child: _cameraExist
-              ? const CircularProgressIndicator()
-              : const Text('No camera is available'),
-        ),
-      );
+      return Center(child: CircularProgressIndicator());
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Camera View')),
+      appBar: AppBar(title: Text('Detect Wires')),
       body: CameraPreview(_cameraController!),
       floatingActionButton: FloatingActionButton(
-        onPressed: _isSendingFrames ? _stopSendingFrames : _startSendingFrames,
-        child: Icon(
-            !_cameraExist && _isSendingFrames ? Icons.stop : Icons.camera_alt),
+        child: Icon(Icons.camera),
+        onPressed: _startDetection,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _cameraController?.stopImageStream();
+    _cameraController?.dispose();
+    _wiresDetector.dispose();
+    super.dispose();
   }
 }
