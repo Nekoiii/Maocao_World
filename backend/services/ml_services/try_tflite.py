@@ -13,6 +13,14 @@ MODEL_PATH = os.path.join(
     "yolov8_wires_dect_best_saved_model",
     "yolov8_wires_dect_best_float32.tflite",
 )
+# MODEL_PATH = os.path.join(
+#     current_dir,
+#     "..",
+#     "..",
+#     "models",
+#     "yolov8n_saved_model",
+#     "yolov8n_float16.tflite",
+# )
 INPUT_IMG_PATH = os.path.join(current_dir, "..", "..", "static", "images", "sky-1.jpg")
 interpreter = tf.lite.Interpreter(model_path=MODEL_PATH)
 
@@ -33,14 +41,15 @@ interpreter.invoke()
 print("try_tflite-- output_details[0]: ", output_details[0])
 
 output_data = interpreter.get_tensor(output_details[0]["index"])
-print("try_tflite-- output_data: ", output_data)
+# print("try_tflite-- output_data: ", output_data)
+print("try_tflite-- output_data.shape: ", output_data.shape)
 
 
-for i in range(output_data.shape[2]):
-    detection = output_data[0, :, i]
-    x, y, width, height, confidence, class_prob = detection
+# for i in range(output_data.shape[2]):
+#     detection = output_data[0, :, i]
+#     x, y, width, height, confidence, class_prob = detection
 
-    if confidence > 0.5:
-        print(
-            f"try_tflite-- Detected bbox: [{x}, {y}, {width}, {height}], confidence: {confidence}, class_prob: {class_prob}"
-        )
+#     if confidence > 0.5:
+#         print(
+#             f"try_tflite-- Detected bbox: [{x}, {y}, {width}, {height}], confidence: {confidence}, class_prob: {class_prob}"
+#         )

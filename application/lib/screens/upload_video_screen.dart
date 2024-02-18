@@ -15,17 +15,18 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   double _uploadProgress = 0.0;
 
   void _onUploadButtonPressed(BuildContext context) async {
-    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile == null) return;
 
     String filePath = pickedFile.path;
-
+    bool processWithPython = false;
     try {
       await uploader.uploadVideo(filePath, (progress) {
         setState(() {
           _uploadProgress = progress;
         });
-      });
+      }, processWithPython);
     } catch (e) {
       print("Error uploading video: $e");
     }
@@ -58,7 +59,16 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
               LinearProgressIndicator(value: _uploadProgress),
             ElevatedButton(
               onPressed: () => _onUploadButtonPressed(context),
-              child: const Text('Upload Video'),
+              child: const Text('Upload Video (python)'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PlayVideoScreen()),
+                );
+              },
+              child: const Text('Play Video'),
             ),
           ],
         ),
