@@ -72,21 +72,30 @@ class DetectWiresWithYolo {
   }
 
   img.Image convertImgToRGB(image) {
-    print('convertImgToRGB-- image.format.group-- ${image.format.group}');
-    img.Image imgRGB = img.Image(width: image.width, height: image.height);
+    if (image is img.Image) {
+      return image;
+    }
 
+    if (image is! CameraImage) {
+      throw FormatException('Unsupported image type');
+    }
+    print('convertImgToRGB-- image.format.group-- ${image.format.group}');
+
+    img.Image imgRGB = img.Image(width: image.width, height: image.height);
     if (image.format.group == ImageFormatGroup.yuv420) {
       imgRGB = YUV420toRGB(image);
-    } else if (image.format.group == ImageFormatGroup.bgra8888) {
-      imgRGB = BGRA8888toRGB(image);
-    } else {
-      print(
-          'convertImgToRGB-- unsupported image format: ${image.format.group}');
+      return imgRGB;
     }
-    return imgRGB;
+    if (image.format.group == ImageFormatGroup.bgra8888) {
+      imgRGB = BGRA8888toRGB(image);
+      return imgRGB;
+    }
+    throw FormatException('Unsupported image format: ${image.format.group}');
   }
 
-  Future<List<DetectionResult>> detectWires(CameraImage image) async {
+  Future<List<DetectionResult>> detectWires(dynamic image,
+      {String? outputFilePath =
+          'outputs/detect_wires_with_yolo_output.jpg'}) async {
     const int resizeW = 640;
     const int resizeH = 640;
 
