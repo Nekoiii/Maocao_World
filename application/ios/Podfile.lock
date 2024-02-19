@@ -4,8 +4,15 @@ PODS:
   - camera_avfoundation (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_ffmpeg (0.4.2):
+    - Flutter
+    - flutter_ffmpeg/https (= 0.4.2)
+  - flutter_ffmpeg/https (0.4.2):
+    - Flutter
+    - mobile-ffmpeg-https (= 4.4)
   - image_picker_ios (0.0.1):
     - Flutter
+  - mobile-ffmpeg-https (4.4)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -39,6 +46,7 @@ DEPENDENCIES:
   - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
+  - flutter_ffmpeg (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
@@ -46,6 +54,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - mobile-ffmpeg-https
     - TensorFlowLiteC
     - TensorFlowLiteSwift
 
@@ -56,6 +65,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/camera_avfoundation/ios"
   Flutter:
     :path: Flutter
+  flutter_ffmpeg:
+    :path: ".symlinks/plugins/flutter_ffmpeg/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
@@ -69,7 +80,9 @@ SPEC CHECKSUMS:
   audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
   camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_ffmpeg: 26a01318e1fa4ebdbd1561848050aadc807d51a9
   image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
+  mobile-ffmpeg-https: 311fc4a8f671cf36d1d6b8f421e8246b790978d9
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
   TensorFlowLiteSwift: 3a4928286e9e35bdd3e17970f48e53c80d25e793

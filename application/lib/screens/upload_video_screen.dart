@@ -14,13 +14,13 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   final picker = ImagePicker();
   double _uploadProgress = 0.0;
 
-  void _onUploadButtonPressed(BuildContext context) async {
+  void _onUploadButtonPressed(BuildContext context,
+      {bool processWithPython = false}) async {
     final XFile? pickedFile =
         await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile == null) return;
 
     String filePath = pickedFile.path;
-    bool processWithPython = false;
     try {
       await uploader.uploadVideo(filePath, (progress) {
         setState(() {
@@ -58,8 +58,14 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
             if (_uploadProgress > 0)
               LinearProgressIndicator(value: _uploadProgress),
             ElevatedButton(
-              onPressed: () => _onUploadButtonPressed(context),
+              onPressed: () =>
+                  _onUploadButtonPressed(context, processWithPython: true),
               child: const Text('Upload Video (python)'),
+            ),
+            ElevatedButton(
+              onPressed: () =>
+                  _onUploadButtonPressed(context, processWithPython: false),
+              child: const Text('Upload Video (dart)'),
             ),
             ElevatedButton(
               onPressed: () {

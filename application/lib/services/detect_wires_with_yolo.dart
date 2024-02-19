@@ -9,9 +9,10 @@ import 'package:image/image.dart' as img;
 import './YUV420_to_RGB.dart';
 import './BGRA8888_to_RGB.dart';
 
-// const MODEL_PATH = 'assets/models/yolov8_wires_dect_best_int8.tflite';
-// const MODEL_PATH = 'assets/models/yolov8_wires_dect_best_full_integer_quant.tflite';
-const MODEL_PATH = 'assets/models/yolov8_wires_dect_best_float16.tflite';
+// const modelPath = 'assets/models/yolov8_wires_dect_best_int8.tflite';
+// const modelPath = 'assets/models/yolov8_wires_dect_best_full_integer_quant.tflite';
+const modelPath = 'assets/models/yolov8_wires_dect_best_float16.tflite';
+const classes = ['cable', 'tower_wooden'];
 
 class DetectionResult {
   final Rect boundingBox;
@@ -24,7 +25,7 @@ class DetectWiresWithYolo {
   Interpreter? _interpreter;
 
   DetectWiresWithYolo() {
-    _loadModel(MODEL_PATH);
+    _loadModel(modelPath);
   }
 
   void _loadModel(String modelPath) async {
@@ -37,11 +38,13 @@ class DetectWiresWithYolo {
   }
 
   List<DetectionResult> parseOutput(List<dynamic> output, int batchSize,
-      int totalDetections, int elementsPerDetection) {
+      int elementsPerDetection, int totalDetections) {
+    print('parseOutput--begin ');
     List<DetectionResult> results = [];
 
     for (int b = 0; b < batchSize; b++) {
       var batch = output[b];
+      // print('parseOutput--batch $b : ${batch}');
       // print('parseOutput--batch.length $b : ${batch.length}');
       // print('parseOutput--batch.length[0] $b : ${batch[0].length}');
       for (int i = 0; i < totalDetections; i++) {
@@ -50,35 +53,32 @@ class DetectWiresWithYolo {
         var y = batch[1][i];
         var width = batch[2][i];
         var height = batch[3][i];
-        var confidence = batch[4][i];
-        // var classId = batch[5][i].toInt();
-        var classId = batch[5][i];
-        print('parseOutput-- batch[0] -- ${batch[0]}');
-        print('parseOutput-- batch.length -- ${batch.length}');
-        // if (classId > 0) {
-        //   print(
-        //       'parseOutput-- ele -- $i -- x: $x, y: $y, width: $width, height: $height, confidence: $confidence, classId: $classId');
-        // }
+        // print(
+        //     'parseOutput-- ele: $i -- x: $x, y: $y, width: $width, height: $height');
 
-        const double confidenceThreshold = 0.5;
-        if (confidence > confidenceThreshold) {
-          Rect boundingBox = Rect.fromLTWH(x, y, width, height);
-          results.add(DetectionResult(boundingBox, confidence, classId));
-          // print('parseOutput-- results $results');
-        }
+        // const double confidenceThreshold = 0.5;
+        // if (confidence > confidenceThreshold) {
+        //   Rect boundingBox = Rect.fromLTWH(x, y, width, height);
+        //   results.add(DetectionResult(boundingBox, confidence, classId));
+        //   // print('parseOutput-- results $results');
+        // }
       }
     }
     return results;
   }
 
   img.Image convertImgToRGB(image) {
+    print('convertImgToRGB--begin');
+    print('convertImgToRGB-- image.runtimeType: ${image.runtimeType}');
     if (image is img.Image) {
+      // print('qqqq-$image');
       return image;
     }
 
     if (image is! CameraImage) {
       throw FormatException('Unsupported image type');
     }
+
     print('convertImgToRGB-- image.format.group-- ${image.format.group}');
 
     img.Image imgRGB = img.Image(width: image.width, height: image.height);
@@ -96,6 +96,7 @@ class DetectWiresWithYolo {
   Future<List<DetectionResult>> detectWires(dynamic image,
       {String? outputFilePath =
           'outputs/detect_wires_with_yolo_output.jpg'}) async {
+    print('detectWires--begin');
     const int resizeW = 640;
     const int resizeH = 640;
 
@@ -106,7 +107,7 @@ class DetectWiresWithYolo {
         imgResized.getBytes().map((e) => e / 255.0).toList();
 
     const int batchSize = 1;
-    const int elementsPerDetection = 6; // 假设每个检测结果由6个元素组成：x、y、宽度、高度、置信度、类别
+    final int elementsPerDetection = 4 + classes.length;
     const int totalDetections = 8400;
     List<dynamic> input =
         imgNormalized.reshape([batchSize, resizeW, resizeH, 3]);
@@ -118,7 +119,7 @@ class DetectWiresWithYolo {
     _interpreter?.run(input, output);
 
     List<DetectionResult> results =
-        parseOutput(output, batchSize, totalDetections, elementsPerDetection);
+        parseOutput(output, batchSize, elementsPerDetection, totalDetections);
 
     return results;
   }
