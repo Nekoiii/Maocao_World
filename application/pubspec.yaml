@@ -44,6 +44,7 @@ dependencies:
   tflite_flutter: ^0.10.4
   flutter_ffmpeg: ^0.4.2
   path_provider: ^2.1.2
+  mime: ^1.0.5
 
 dev_dependencies:
   flutter_test:

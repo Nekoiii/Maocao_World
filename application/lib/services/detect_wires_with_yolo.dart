@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:mime/mime.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as img;
@@ -44,7 +45,7 @@ class DetectWiresWithYolo {
 
     for (int b = 0; b < batchSize; b++) {
       var batch = output[b];
-      // print('parseOutput--batch $b : ${batch}');
+      print('sss-parseOutput--batch $b : ${batch}');
       // print('parseOutput--batch.length $b : ${batch.length}');
       // print('parseOutput--batch.length[0] $b : ${batch[0].length}');
       for (int i = 0; i < totalDetections; i++) {
@@ -76,7 +77,8 @@ class DetectWiresWithYolo {
     }
 
     if (image is! CameraImage) {
-      throw FormatException('Unsupported image type');
+      return image;
+      // throw FormatException('Unsupported image type');
     }
 
     print('convertImgToRGB-- image.format.group-- ${image.format.group}');
@@ -105,18 +107,20 @@ class DetectWiresWithYolo {
         img.copyResize(imgRGB, width: resizeW, height: resizeH);
     List<double> imgNormalized =
         imgResized.getBytes().map((e) => e / 255.0).toList();
+    print('sss-imgNormalized---$imgNormalized');
 
     const int batchSize = 1;
     final int elementsPerDetection = 4 + classes.length;
     const int totalDetections = 8400;
     List<dynamic> input =
         imgNormalized.reshape([batchSize, resizeW, resizeH, 3]);
-
+    print('sss-input---$input');
     List<dynamic> output =
         List.filled(batchSize * elementsPerDetection * totalDetections, 0)
             .reshape([batchSize, elementsPerDetection, totalDetections]);
 
     _interpreter?.run(input, output);
+    print('sas-output : $output');
 
     List<DetectionResult> results =
         parseOutput(output, batchSize, elementsPerDetection, totalDetections);

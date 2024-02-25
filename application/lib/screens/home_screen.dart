@@ -2,7 +2,7 @@ import '../config/app_config.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/image_display_widget.dart';
-import 'upload_video_screen.dart';
+import 'upload_screen.dart';
 import '../screens/play_video_screen.dart';
 import '../screens/camera_screen.dart';
 
@@ -36,8 +36,7 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => UploadVideoScreen()),
+                    MaterialPageRoute(builder: (context) => UploadScreen()),
                   );
                 },
                 child: const Text('Upload Video'),
