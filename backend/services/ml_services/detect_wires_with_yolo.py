@@ -1,10 +1,6 @@
 import os
-import pdb
 
-import cv2
-import numpy as np
 from ultralytics import YOLO
-from services.drawing_services.draw_bounding_boxes import draw_bounding_boxes
 from services.drawing_services.draw_music_symbols import draw_music_symbols
 
 from services.video_services.video_processor import read_video_frames, frames_to_video
@@ -18,7 +14,6 @@ if not os.path.exists(OUTPUT_FOLDER):
     os.makedirs(OUTPUT_FOLDER)
 
 model = YOLO(MODEL_PATH)
-
 IF_SHOW_BBOXES = True
 
 

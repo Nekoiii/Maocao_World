@@ -15,7 +15,7 @@ class UploadScreen extends StatefulWidget {
 }
 
 class _UploadScreenState extends State<UploadScreen> {
-  final FileUploader uploader = FileUploader();
+  final FileUploader fileUploader = FileUploader();
   final picker = ImagePicker();
   double _uploadProgress = 0.0;
 
@@ -23,7 +23,7 @@ class _UploadScreenState extends State<UploadScreen> {
     final XFile? pickedFile =
         await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile == null) return;
-    await uploader.uploadVideo(pickedFile, 'video', (progress) {
+    await fileUploader.uploadVideo(pickedFile, 'video', (progress) {
       setState(() {
         _uploadProgress = progress;
       });
@@ -36,9 +36,8 @@ class _UploadScreenState extends State<UploadScreen> {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Video uploaded successfully')));
-      print('SnackBar shown');
-
-      extractAndProcessVideo(pickedFile.path);
+      print('Video uploaded successfully');
+      if (!isProcessWithPython) extractAndProcessVideo(pickedFile.path);
       // Navigator.push(
       //   context,
       //   MaterialPageRoute(builder: (context) => PlayVideoScreen()),

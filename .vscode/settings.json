@@ -8,6 +8,7 @@
     "tflite",
     "ultralytics",
     "werkzeug",
-    "Yolo"
+    "Yolo",
+    "yolov"
   ]
 }

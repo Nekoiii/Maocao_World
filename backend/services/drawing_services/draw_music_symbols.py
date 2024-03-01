@@ -4,7 +4,6 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from constants.music_constants import music_symbols
 from .draw_bounding_boxes import draw_bounding_boxes
-import seaborn as sns
 
 
 FONT_PATH = os.path.join(
